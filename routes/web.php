@@ -7,4 +7,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('/up', WeatherApiController::class);
+Route::get('/', [WeatherApiController::class, 'index'])->name('index');
+Route::post('/', [WeatherApiController::class, 'show'])->name('show');
+Route::post('/salvar-localizacao', [WeatherApiController::class, 'salvarLocalizacao'])->name('salvar.localizacao');
