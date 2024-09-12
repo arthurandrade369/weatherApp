@@ -8,5 +8,5 @@ Route::get('/', function () {
 });
 
 Route::get('/', [WeatherApiController::class, 'index'])->name('index');
-Route::post('/', [WeatherApiController::class, 'show'])->name('show');
-Route::post('/salvar-localizacao', [WeatherApiController::class, 'salvarLocalizacao'])->name('salvar.localizacao');
+Route::post('/{cidade}', [WeatherApiController::class, 'show'])->name('show');
+Route::post('/localizacao', [WeatherApiController::class, 'localizacao'])->name('localizacao');

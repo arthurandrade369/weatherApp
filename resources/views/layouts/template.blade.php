@@ -38,6 +38,26 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
         crossorigin="anonymous"></script>
 
+    <!-- Script para filtrar a lista de cidades na navbar-->
+    <script>
+        $(document).ready(function() {
+            $("#searchInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                var searchCard = $("#searchCard");
+                // Se o campo de entrada não estiver vazio, exibe a lista
+                if (value) {
+                    searchCard.removeClass("d-none");
+                } else {
+                    searchCard.addClass("d-none"); // Esconde a lista se o campo estiver vazio
+                }
+
+                // Filtra os itens da lista
+                $("#dataList li").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+        });
+    </script>
     @stack('scripts')
 </body>
 

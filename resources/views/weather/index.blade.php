@@ -26,7 +26,7 @@
 
             // Envia os dados via AJAX
             $.ajax({
-                url: "{{ route('salvar.localizacao') }}", // A rota para onde enviar os dados
+                url: "{{ route('localizacao') }}", // A rota para onde enviar os dados
                 type: "POST",
                 data: {
                     latitude: lat,
