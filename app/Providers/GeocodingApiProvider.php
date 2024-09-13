@@ -12,10 +12,10 @@ class GeocodingApiProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind('geocode-api', function () {
+        $this->app->bind('geocoding-api', function () {
             return Http::withOptions([
                 'verify' => false,
-                'base_uri' => 'http://api.openweathermap.org/geo/1.0/direct?appid='.env('WEATHER_API_KEY'),
+                'base_uri' => 'http://api.openweathermap.org/geo/1.0/',
             ]);
         });
     }

@@ -76,9 +76,10 @@
                                 $("#dropdownList").hide();
                             }
                         },
-                        error: function() {
+                        error: function(xrh, status, error) {
                             // Esconde o dropdown em caso de erro na API
                             $("#dropdownList").hide();
+                            console.log("Erro ao buscar cidades: ", xrh);
                         }
                     });
                 } else {

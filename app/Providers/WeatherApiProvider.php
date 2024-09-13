@@ -15,7 +15,7 @@ class WeatherApiProvider extends ServiceProvider
         $this->app->bind('weather-api', function () {
             return Http::withOptions([
                 'verify' => false,
-                'base_uri' => 'https://jsonplaceholder.typicode.com',
+                'base_uri' => 'https://api.openweathermap.org/data/2.5/',
             ]);
         });
     }
