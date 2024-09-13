@@ -12,9 +12,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body class="">
-    <div class="min-vh-100 d-flex text-decoration-none">
-        @include('partials.navbar')
+<body class="d-flex h-100 text-center">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <header>
+            @include('partials.navbar')
+        </header>
 
         <div class="pt-5 mt-5">
             <section class="content">
@@ -42,19 +44,54 @@
     <script>
         $(document).ready(function() {
             $("#searchInput").on("keyup", function() {
-                var value = $(this).val().toLowerCase();
-                var searchCard = $("#searchCard");
-                // Se o campo de entrada não estiver vazio, exibe a lista
-                if (value) {
-                    searchCard.removeClass("d-none");
-                } else {
-                    searchCard.addClass("d-none"); // Esconde a lista se o campo estiver vazio
-                }
+                var query = $(this).val().toLowerCase();
+                var dropdownList = $("#dropdownList");
 
-                // Filtra os itens da lista
-                $("#dataList li").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-                });
+
+                // Se o campo não estiver vazio, faz a requisição à API
+                if (query.length > 0) {
+                    $.ajax({
+                        url: "{{ route('geocode') }}",
+                        method: 'POST',
+                        data: {
+                            query: query,
+                            _token: "{{ csrf_token() }}" // Token CSRF necessário para requisições POST no Laravel
+                        },
+                        success: function(response) {
+                            console.log(response);
+                            // Limpa os itens antigos do dropdown
+                            $("#dropdownList").empty();
+
+                            // Preenche a lista com os novos dados da API
+                            if (response.length > 0) {
+                                response.forEach(function(item) {
+                                    $("#dropdownList").append(
+                                        '<li class="dropdown-item">' + item.name +
+                                        '</li>');
+                                });
+                                // Exibe o dropdown
+                                $("#dropdownList").show();
+                            } else {
+                                // Esconde o dropdown se não houver resultados
+                                $("#dropdownList").hide();
+                            }
+                        },
+                        error: function() {
+                            // Esconde o dropdown em caso de erro na API
+                            $("#dropdownList").hide();
+                        }
+                    });
+                } else {
+                    // Esconde o dropdown se o campo de busca estiver vazio
+                    $("#dropdownList").hide();
+                }
+            });
+
+            // Esconde o dropdown quando clicar fora
+            $(document).click(function(e) {
+                if (!$(e.target).closest('.dropdown').length) {
+                    $("#dropdownList").hide();
+                }
             });
         });
     </script>

@@ -17,7 +17,7 @@
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(sendLocation);
         } else {
-            alert("Geolocalização não é suportada pelo seu navegador.");
+            console.log("Geolocalização não é suportada pelo seu navegador.");
         }
 
         function sendLocation(position) {
@@ -26,13 +26,14 @@
 
             // Envia os dados via AJAX
             $.ajax({
-                url: "{{ route('localizacao') }}", // A rota para onde enviar os dados
+                url: "{{ route('weather') }}", // A rota para onde enviar os dados
                 type: "POST",
                 data: {
                     latitude: lat,
                     longitude: lon,
                     _token: "{{ csrf_token() }}" // Token CSRF necessário para requisições POST no Laravel
                 },
+                dataType: "json",
                 success: function(response) {
                     console.log("Localização enviada com sucesso: ", response);
                 },

@@ -3,30 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Facades\WeatherApi;
+use Illuminate\Http\Client\Request;
 
 class WeatherApiController extends Controller
 {
-    // public function __invoke()
-    // {
-    //     return WeatherApi::get('/posts')->json();
-    // }
+   // public function __invoke()
+   // {
+   //     return WeatherApi::get('/posts')->json();
+   // }
 
-    public function index()
-    {
-        $data = WeatherApi::get('/posts')->json();
-        $collection = collect($data)->all();
-        return view('weather.index', ['data' => $collection]);
-    }
+   public function index()
+   {
+      //   $data = WeatherApi::get('/posts')->json();
+      //   $collection = collect($data)->all();
+      return view('weather.index');
+   }
 
-    public function show($cidade)
-    {
-        
-        return view('weather.show', ['cidade' => $cidade]);
-    }
+   public function show($cidade)
+   {
 
-    public function localizacao()
-    {
-        $json = '{
+      return view('weather.show', ['cidade' => $cidade]);
+   }
+
+   public function weatherByLocation(Request $request)
+   {
+      $json = '{
             "lat":33.44,
             "lon":-94.04,
             "timezone":"America/Chicago",
@@ -143,7 +144,7 @@ class WeatherApiController extends Controller
             ]
          }';
 
-
-        return response()->json($json);
-    }
+      $array = json_decode($json, true);
+      return response($array);
+   }
 }
