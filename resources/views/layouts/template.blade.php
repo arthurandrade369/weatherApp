@@ -44,17 +44,17 @@
     <script>
         $(document).ready(function() {
             $("#searchInput").on("keyup", function() {
-                var query = $(this).val().toLowerCase();
+                var q = $(this).val().toLowerCase();
                 var dropdownList = $("#dropdownList");
 
 
                 // Se o campo não estiver vazio, faz a requisição à API
-                if (query.length > 0) {
+                if (q.length > 5) {
                     $.ajax({
                         url: "{{ route('geocode') }}",
                         method: 'POST',
                         data: {
-                            query: query,
+                            q: q, // Query de busca
                             _token: "{{ csrf_token() }}" // Token CSRF necessário para requisições POST no Laravel
                         },
                         success: function(response) {
@@ -65,9 +65,20 @@
                             // Preenche a lista com os novos dados da API
                             if (response.length > 0) {
                                 response.forEach(function(item) {
+                                    // Criar o link dinâmico com latitude e longitude
+                                    var cityUrl =
+                                        '{{ route('show', [":lat", ":lon"]) }}'
+                                        .replace(':lat', item.lat)
+                                        .replace(':lon', item.lon);
+
+                                    // Adiciona um item à lista
                                     $("#dropdownList").append(
-                                        '<li class="dropdown-item">' + item.name +
-                                        '</li>');
+                                        '<li class="dropdown-item">' +
+                                        '<a href="' + cityUrl + '">' +
+                                        item.name + ' - ' + item.state + ', ' + item.country +
+                                        '</a>' +
+                                        '</li>'
+                                    );
                                 });
                                 // Exibe o dropdown
                                 $("#dropdownList").show();

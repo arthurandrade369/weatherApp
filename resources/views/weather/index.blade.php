@@ -49,7 +49,7 @@
                         return date.toLocaleTimeString();
                     }
 
-                    $('#city').text(weatherData.name);
+                    $('#city').text(weatherData.name + ', ' + weatherData.sys.country);
                     $('#temp').text((weatherData.main.temp - 273.15).toFixed(2) +
                         ' °C'); // Convertendo de Kelvin para Celsius
                     $('#weather').text(weatherData.weather[0].main);
@@ -57,7 +57,6 @@
                     $('#wind_speed').text(weatherData.wind.speed);
                     $('#sunrise').text(formatTime(weatherData.sys.sunrise));
                     $('#sunset').text(formatTime(weatherData.sys.sunset));
-                    console.log(response);
                 },
                 error: function(xhr, status, exception) {
                     console.log("Erro ao enviar localização: ", xhr, exception);
