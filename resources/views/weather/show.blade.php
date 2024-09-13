@@ -23,7 +23,6 @@
         $(document).ready(function() {
             var lat = {{ $lat }};
             var lon = {{ $lon }};
-            console.log(lat, lon);
             // Envia os dados via AJAX
             $.ajax({
                 url: "{{ route('weather') }}", // A rota para onde enviar os dados

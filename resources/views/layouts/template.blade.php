@@ -58,7 +58,6 @@
                             _token: "{{ csrf_token() }}" // Token CSRF necessário para requisições POST no Laravel
                         },
                         success: function(response) {
-                            console.log(response);
                             // Limpa os itens antigos do dropdown
                             $("#dropdownList").empty();
 
