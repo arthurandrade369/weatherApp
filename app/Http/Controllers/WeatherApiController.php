@@ -12,9 +12,9 @@ class WeatherApiController extends Controller
       return view('weather.index');
    }
 
-   public function show($city)
+   public function show($lat, $lon)
    {
-      return view('weather.show', ['city' => $city]);
+      return view('weather.show', ['lat' => $lat, 'lon' => $lon]);
    }
 
    public function weatherByLocation(Request $request)
